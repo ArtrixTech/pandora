@@ -8,6 +8,7 @@ from urllib.parse import urlparse, parse_qs
 import requests
 from certifi import where
 
+from os import getenv
 from ..exts.config import default_api_prefix
 
 
@@ -51,7 +52,7 @@ class Auth0:
         return self.refresh_token
 
     def __part_one(self) -> str:
-        url = '{}/auth/preauth'.format(default_api_prefix())
+        url = '{}/auth/preauth'.format(getenv('CHATGPT_API_PREFIX', default_api_prefix()))
         resp = self.session.get(url, allow_redirects=False, **self.req_kwargs)
 
         if resp.status_code == 200:
